@@ -1,6 +1,8 @@
 ;;; rdio.el --- Control Rdio Desktop App from Emacs
+;;
 ;; Copyright 2015 Horace Williams
 ;;
+;; Filename: rdio.el
 ;; Author: Horace Williams <horacedwilliams@gmail.com>
 ;; Maintainer: Horace Williams <horacedwilliams@gmail.com>
 ;; Keywords: rdio osx music player
@@ -26,6 +28,7 @@
 ;; rdio-vol-up -- increase volume by 10% of total
 ;; rdio-vol-down -- decrease volume by 10% of total
 
+;;; Code:
 (require 'cl-lib)
 
 (defun rdio-using-osx ()
@@ -36,32 +39,44 @@
 
 ;;;###autoload
 (defun rdio-launch ()
+  (interactive)
   (shell-command "osascript -e 'tell application \"Rdio\" to launch'"))
 
 ;;;###autoload
 (defun rdio-quit ()
+  (interactive)
   (shell-command "osascript -e 'tell application \"Rdio\" to quit'"))
 
 ;;;###autoload
 (defun rdio-play ()
+  "Start rdio player; will launch rdio if it isn't already running"
+  (interactive)
   (rdio-launch)
   (shell-command "osascript -e 'tell application \"Rdio\" to play'"))
 
 ;;;###autoload
 (defun rdio-toggle ()
+  "Toggle play/pause mode of rdio player; will start rdio if it isn't already running"
+  (interactive)
   (rdio-launch)
   (shell-command "osascript -e 'tell application \"Rdio\" to playpause'"))
 
 ;;;###autoload
 (defun rdio-pause ()
+  "Pause rdio player"
+  (interactive)
   (shell-command "osascript -e 'tell application \"Rdio\" to pause'"))
 
 ;;;###autoload
 (defun rdio-next-track ()
+  "Go to next track"
+  (interactive)
   (shell-command "osascript -e 'tell application \"Rdio\" to next track'"))
 
 ;;;###autoload
 (defun rdio-prev-track ()
+  "Go to previous track"
+  (interactive)
   (shell-command "osascript -e 'tell application \"Rdio\" to previous track'"))
 
 (defun rdio-chomp-end (str)
@@ -83,10 +98,16 @@
 
 ;;;###autoload
 (defun rdio-vol-up ()
+  "Decrease rdio volume by 10%"
+  (interactive)
   (shell-command (format "osascript -e 'tell application \"Rdio\" to set sound volume to %S'" (rdio-adjusted-vol 10))))
 
 ;;;###autoload
 (defun rdio-vol-down ()
+  "Increase rdio volume by 10%"
+  (interactive)
   (shell-command (format "osascript -e 'tell application \"Rdio\" to set sound volume to %S'" (rdio-adjusted-vol -10))))
 
 (provide 'rdio)
+
+;;; rdio.el ends here
